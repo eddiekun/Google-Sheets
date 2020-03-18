@@ -1,0 +1,55 @@
+I need help with a script I am trying to repurpose. 
+
+Question 1: I want to write the data extracted from JSON into the first open row on the spreadsheet. Currently it overwrites from the first cell in the sheet:
+
+  var response = UrlFetchApp.fetch(encodeURI(API_URL1), options);
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+  mergeWithTotals(data.elements);
+}
+
+function mergeWithTotals(elements) {
+ 
+
+  for (i=0; i<elements.length; i++) {
+    var el = elements[i];
+    var rowData = [[el.type, el.currentStatus, el.id, el.createdAt, el.createdBy, el.folderId, el.name, el.updatedAt, el.updatedBy, el.archive, el.htmlContent, el.subject ]];
+    currentSheet.getRange('A' + (i+1) + ':L' + (i+1)).setValues(rowData);    
+  }
+  
+  rowData =
+  currentSheet.getRange('A' + (elements.length) + ':L' + (elements.length)).setValues(rowData);
+
+}
+
+Question 2: Where I have 03-17-2020 I want to insert a variable for yesterday and where 03-18-2020 insert a variable for today. I want to run the API daily and I'll use the trigger functions within Google Sheets.
+var API_URL1  = "https://xxx.com?search=createdAt>'03-17-2020'createdAt<'03-18-2020'"
+
+Question 3: I need to run a slight variation of var API_URL1 listed above. This is just a simple number change but it does entail another set of authentication credentials. What changes should I make to accomodate two sets of credentials?
+
+function saveCredentials(){
+  var userName = ui.prompt('Username' , ui.ButtonSet.OK);
+  var userPass = ui.prompt('Passcode ' , ui.ButtonSet.OK);
+  userProperties.setProperty('CREDENTIALS', Utilities.base64Encode(userName.getResponseText() + ':' + userPass.getResponseText()));
+}
+
+function eloquaAuditObjectTotals() {
+  var authHeader = 'Basic ' + userProperties.getProperty('CREDENTIALS');
+  var options = {
+    headers: {Authorization: authHeader}
+  }
+
+}
+
+function compileData() {
+  var authHeader = 'Basic ' + userProperties.getProperty('CREDENTIALS');
+  var options = {
+    headers: {Authorization: authHeader}
+  }
+  var response = UrlFetchApp.fetch(encodeURI(API_URL1), options);
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+  mergeWithTotals(data.elements);
+}
+
+Thanks!
