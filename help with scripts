@@ -22,10 +22,8 @@ function mergeWithTotals(elements) {
 
 }
 
-Question 2: Where I have 03-17-2020 I want to insert a variable for yesterday and where 03-18-2020 insert a variable for today. I want to run the API daily and I'll use the trigger functions within Google Sheets.
-var API_URL1  = "https://xxx.com?search=createdAt>'03-17-2020'createdAt<'03-18-2020'"
 
-Question 3: I need to run a slight variation of var API_URL1 listed above. This is just a simple number change but it does entail another set of authentication credentials. What changes should I make to accomodate two sets of credentials?
+Question 2: I need to run a slight variation of var API_URL1 listed above. This is just a simple number change but it does entail another set of authentication credentials. What changes should I make to accomodate two sets of credentials?
 
 function saveCredentials(){
   var userName = ui.prompt('Username' , ui.ButtonSet.OK);
